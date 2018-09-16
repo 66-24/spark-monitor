@@ -1,22 +1,24 @@
-Java Application project template
+Spark
 ------------------------------------
 
-You have just created a basic Java application. There is a standard project
-structure for source code and tests.
+## Quick Start Spark
 
-In this project you get:
+- Create spark-env.sh
 
-* A Gradle build file
-* A standard project structure:
+`cp $SPARK_HOME/conf/spark-env.sh.template $SPARK_HOME/conf/spark-env.sh` 
+- To Enable Spark Shuttle Service which is required for _Spark Dynamic Allocation_
 
-    <proj>
-      |
-      +- src
-          |
-          +- main
-          |     |
-          |     +- java
-          |
-          +- test
-          |   |
-          |   +- java
+` echo "SPARK_WORKER_OPTS="-Dspark.shuffle.service.enabled=true" >> $SPARK_HOME/conf/spark-env.sh`
+- Create log4j.properties for Spark 
+```
+cp $SPARK_HOME/conf/log4j.properties.template $SPARK_HOME/conf/log4j.properties
+```
+
+- Start spark master and slave 
+```
+$SPARK_HOME/sbin/start-master.sh
+$SPARK_HOME/sbin/start-slave.sh
+```
+
+# FAQ
+### How do I reduce the verbosity of the Spark Logging ?
