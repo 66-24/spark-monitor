@@ -1,7 +1,10 @@
 plugins {
     id 'java'
     id 'application'
+    id "com.github.johnrengelman.shadow" version "2.0.4"
 }
+
+mainClassName = 'org.apache.spark.launcher.SparkLauncherWrapper'
 
 repositories {
     mavenCentral()

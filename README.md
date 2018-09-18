@@ -6,7 +6,8 @@ Spark
 - Create spark-env.sh
 
 `cp $SPARK_HOME/conf/spark-env.sh.template $SPARK_HOME/conf/spark-env.sh` 
-- To Enable Spark Shuttle Service which is required for _Spark Dynamic Allocation_
+- To Enable Spark Shuttle Service which is required for _Spark Dynamic Allocation_.
+Spark Shuffle Service is started by the Worker on port *7337* by default
 
 ` echo "SPARK_WORKER_OPTS="-Dspark.shuffle.service.enabled=true" >> $SPARK_HOME/conf/spark-env.sh`
 - Create log4j.properties for Spark 
@@ -21,4 +22,47 @@ $SPARK_HOME/sbin/start-slave.sh
 ```
 
 # FAQ
-### How do I reduce the verbosity of the Spark Logging ?
+### How do I redirect Spark Launcher Logging ?
+ *Not to be confused for the embedded driver logs in client mode* 
+
+There are a few ways:
+- redirect to a file - no log file size management
+```
+sparkLauncher.redirectError(new File("/dev/null"));
+```
+For some reason all the spark logging is tied to stderr.
+stdout displays the output which in this case is 
+
+```
+Pi is roughly 3.1415003141500315
+```
+
+- Inherit the logging to stdout and stderr of the this application
+```
+sparkLauncher.redirectError(ProcessBuilder.Redirect.INHERIT);
+sparkLauncher.redirectOutput(ProcessBuilder.Redirect.INHERIT);
+```
+In this case the output does not have the annoying header that bloats the logs
+```
+Sep 16, 2018 8:55:55 PM org.apache.spark.launcher.OutputRedirector redirect                   
+
+```
+However, in this case its not possible to intercept and mute the _sub-process_ 
+**driver** logs.
+
+- Finally, its possible to configure java.util.logging to re-route the **driver** logs
+to a file. This log file handler can be configured to rotate when a _max_ size is reached
+and to retain a certain number of _rotated_ logs.
+
+
+## How do I specify a logging.properties to be used rather than the system one ?
+ Use `-Djava.util.logging.config.file=src/main/resources/logging.properties`.
+ If SparkMonitor is used to launch multiple apps via a configuration file, then 
+ it might be better to generate the config as opposed to use a static logging.properties.
+
+## How do I create a fat jar ?
+`gradle shadowJar
+`
+## How do I run the app from the command line ?
+
+`java -DHOST=$(hostname) -jar ./build/libs/spark-monitor-all.jar`

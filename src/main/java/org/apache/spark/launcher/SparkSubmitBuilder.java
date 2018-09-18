@@ -4,6 +4,9 @@ import java.util.HashMap;
 
 class SparkSubmitBuilder {
     private final static String pi = "\u03C0";
+    private final static String HOST = System.getProperty("HOST");
+    private final static String SPARK_HOME = System.getenv("SPARK_HOME");
+
 
     String getCmd() {
         SparkLauncher sparkLauncher = buildLauncher();
@@ -17,14 +20,13 @@ class SparkSubmitBuilder {
         getEnv().forEach(sparkLauncher::setConf);
 
         sparkLauncher.setDeployMode("client");
-        final String home = "/home/srini";
 
 
         sparkLauncher.setAppName("Spark " + pi);
-        sparkLauncher.setAppResource(home + "/.sdkman/candidates/spark/current/examples/jars/spark-examples_2.11-2.3.1.jar");
-        sparkLauncher.setSparkHome(home + "/.sdkman/candidates/spark/current");
+        sparkLauncher.setAppResource(SPARK_HOME + "/examples/jars/spark-examples_2.11-2.3.1.jar");
+        sparkLauncher.setSparkHome(SPARK_HOME);
         sparkLauncher.setMainClass("org.apache.spark.examples.SparkPi");
-        sparkLauncher.setMaster("spark://pop-os:7077");
+        sparkLauncher.setMaster("spark://" + HOST + ":7077");
         sparkLauncher.addAppArgs("100");
         return sparkLauncher;
     }
