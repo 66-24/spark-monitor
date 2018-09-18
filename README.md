@@ -47,10 +47,11 @@ In this case the output does not have the annoying header that bloats the logs
 Sep 16, 2018 8:55:55 PM org.apache.spark.launcher.OutputRedirector redirect                   
 
 ```
-However, in this case its not possible to intercept and mute the _sub-process_ 
-**driver** logs.
+However, in this case its not possible to intercept and mute the **Launcher** logs.
+Not to be confused with the embedded driver logs. If say the embedded driver uses 
+log4j instead of java.util.logging, its possible to redirect driver logs to a file. 
 
-- Finally, its possible to configure java.util.logging to re-route the **driver** logs
+- Finally, its possible to configure java.util.logging to re-route the **Launcher** logs
 to a file. This log file handler can be configured to rotate when a _max_ size is reached
 and to retain a certain number of _rotated_ logs.
 
