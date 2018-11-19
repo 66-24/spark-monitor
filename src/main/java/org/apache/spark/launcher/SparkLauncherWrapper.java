@@ -19,6 +19,8 @@ public class SparkLauncherWrapper {
     private File devNull = new File("/dev/null");
 
     public static void main(String[] args) throws Exception {
+        System.setProperty("java.util.logging.SimpleFormatter.format", "%5$s%6$s%n");
+
         SparkLauncherWrapper sparkLauncherWrapper = new SparkLauncherWrapper();
         sparkLauncherWrapper.launch();
         appExitLatch.await();
@@ -32,7 +34,6 @@ public class SparkLauncherWrapper {
         handler.setFormatter(new SimpleFormatter());
         logger.addHandler(handler);
         logger.setLevel(Level.INFO);
-        logger.setUseParentHandlers(false);
         return logger;
     }
 
