@@ -88,7 +88,10 @@ String.format(format, date, source, logger, level, message, thrown);
 
 See [docs](https://docs.oracle.com/javase/7/docs/api/java/util/Formatter.html)
 
-
+## What is the default format specifier used by java.util.logger.SimpleFormatter ?
+```
+%1$tb %1$td, %1$tY %1$tl:%1$tM:%1$tS %1$Tp %2$s%n%4$s: %5$s%6$s%n"
+```
 
 ## How do I specify a logging.properties to be used rather than the system one ?
  Use `-Djava.util.logging.config.file=src/main/resources/logging.properties`.
