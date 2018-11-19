@@ -77,6 +77,19 @@ Set the log format to get rid of the annyoing `Sep 16, 2018 8:55:55 PM org.apach
 ```
 
 
+## Making sense of the format specifiers used in java.utill.logger
+In `/usr/lib/jvm/java-8-oracle/src.zip!/java/util/logging/SimpleFormatter.java:161`, SimpleFormatter uses the following:
+```
+String.format(format, date, source, logger, level, message, thrown);
+```
+`%5$s` applies to the 5th arg which is level 
+`%6$s` applies to the 6th arg which is message
+`%n`   represents a newline
+
+See [docs](https://docs.oracle.com/javase/7/docs/api/java/util/Formatter.html)
+
+
+
 ## How do I specify a logging.properties to be used rather than the system one ?
  Use `-Djava.util.logging.config.file=src/main/resources/logging.properties`.
  If SparkMonitor is used to launch multiple apps via a configuration file, then 
