@@ -61,6 +61,8 @@ public class SparkLauncherWrapper {
     private java.util.logging.Logger getRootLogger() {
         final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(java.util.logging.Logger.GLOBAL_LOGGER_NAME);
         Arrays.stream(logger.getHandlers()).forEach(logger::removeHandler);
+        //Without this the logging will go to the Console and to a file.
+        logger.setUseParentHandlers(false);
         return logger;
     }
 
