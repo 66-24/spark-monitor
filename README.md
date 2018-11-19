@@ -23,7 +23,24 @@ $SPARK_HOME/sbin/start-slave.sh
 
 # FAQ
 ### How do I redirect Spark Launcher Logging ?
- *Not to be confused for the embedded driver logs in client mode* 
+ *Not to be confused with the embedded driver logs in client mode* 
+ 
+ These are the sparklaunch logs.
+ 
+ Example:
+ 
+ ```
+ Sep 17, 2018 8:12:44 PM org.apache.spark.launcher.OutputRedirector redirect
+ INFO: 18/09/17 20:12:44 WARN Utils: Your hostname, pop-os resolves to a loopback address: 127.0.1.1; using 192.168.86.49 instead (on interface wlp59s0)
+ Sep 17, 2018 8:12:44 PM org.apache.spark.launcher.OutputRedirector redirect
+ INFO: 18/09/17 20:12:44 WARN Utils: Set SPARK_LOCAL_IP if you need to bind to another address
+ Sep 17, 2018 8:12:44 PM org.apache.spark.launcher.OutputRedirector redirect
+ INFO: 18/09/17 20:12:44 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+ Sep 17, 2018 8:12:44 PM org.apache.spark.launcher.OutputRedirector redirect
+ INFO: 18/09/17 20:12:44 INFO SparkContext: Running Spark version 2.3.1
+ Sep 17, 2018 8:12:44 PM org.apache.spark.launcher.OutputRedirector redirect
+ INFO: 18/09/17 20:12:44 INFO SparkContext: Submitted application: Spark Pi
+```
 
 There are a few ways:
 - redirect to a file - no log file size management
