@@ -118,7 +118,12 @@ and `Executor(s)`
 
 ## How do I create a fat jar ?
 `gradle shadowJar
-`
+
+## How do I see the list of runtime dependencies ?
+```bash
+gradle dependencies --configuration=runtime
+```
+
 ## How do I run the app from the command line ?
 
 `java -DHOST=$(hostname) -jar ./build/libs/spark-monitor-all.jar`
