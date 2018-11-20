@@ -19,6 +19,7 @@ public class SparkLauncherWrapper {
     private File devNull = new File("/dev/null");
 
     public static void main(String[] args) throws Exception {
+        //This gets rid of the annoying header for every line "Nov 20, 2018 11:21:42 AM org.apache.spark.launcher.OutputRedirector redirect"
         System.setProperty("java.util.logging.SimpleFormatter.format", "%5$s%6$s%n");
 
         SparkLauncherWrapper sparkLauncherWrapper = new SparkLauncherWrapper();

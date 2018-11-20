@@ -97,6 +97,24 @@ See [docs](https://docs.oracle.com/javase/7/docs/api/java/util/Formatter.html)
  Use `-Djava.util.logging.config.file=src/main/resources/logging.properties`.
  If SparkMonitor is used to launch multiple apps via a configuration file, then 
  it might be better to generate the config as opposed to use a static logging.properties.
+ 
+## How do I control the logging pattern of the Driver and Executor ?
+Add the following Spark configuration:
+```
+    conf.put("spark.driver.extraJavaOptions", "-Dlog4j.configuration=file:/path/to/my_log4j.properties");
+    conf.put("spark.executor.extraJavaOptions", "-Dlog4j.configuration=file:/path/to/my_log4j.properties");
+```
+Now define the layout pattern you want in `my_log4j.properties`
+
+```
+log4j.appender.console.layout=org.apache.log4j.PatternLayout
+log4j.appender.console.layout.ConversionPattern=%d{yy/MM/dd HH:mm:ss} %p [%t] %C{5}: %m%n
+```
+
+## How many logging systems are used by this application ?
+ - The driver and executor both use slfj-api which is then bound to log4j in this application.
+ -  org.apache.spark.launcher.SparkLauncher uses java.util.logging.Logger to redirectLogs produced by the `Driver`
+and `Executor(s)` 
 
 ## How do I create a fat jar ?
 `gradle shadowJar

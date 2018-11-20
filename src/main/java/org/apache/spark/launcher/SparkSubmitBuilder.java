@@ -1,5 +1,6 @@
 package org.apache.spark.launcher;
 
+import java.net.URISyntaxException;
 import java.util.HashMap;
 
 class SparkSubmitBuilder {
@@ -32,12 +33,23 @@ class SparkSubmitBuilder {
     }
 
     private HashMap<String, String> getEnv() {
+        final String log4jConfig = getLog4jConfig();
         HashMap<String, String> conf = new HashMap<>();
         conf.put("spark.executor.cores", "1");
         conf.put("spark.executor.memory", "1G");
         conf.put("spark.driver.cores", "1");
         conf.put("spark.driver.memory", "512M");
         conf.put("spark.cores.max", "2");
+        conf.put("spark.driver.extraJavaOptions", log4jConfig);
+        conf.put("spark.executor.extraJavaOptions", log4jConfig);
         return conf;
+    }
+
+    private String getLog4jConfig() {
+        try {
+            return "-Dlog4j.configuration=" + ClassLoader.getSystemResource("log4j.properties").toURI();
+        } catch (URISyntaxException e) {
+            throw new RuntimeException("Unable to find log4j.properties", e);
+        }
     }
 }
