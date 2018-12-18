@@ -127,3 +127,6 @@ gradle dependencies --configuration=runtime
 ## How do I run the app from the command line ?
 
 `java -DHOST=$(hostname) -jar ./build/libs/spark-monitor-all.jar`
+
+## Application fails to launch
+Make sure the `spark_examples*.jar` is present. See `org.apache.spark.launcher.SparkSubmitBuilder.`
